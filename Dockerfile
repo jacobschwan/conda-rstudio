@@ -6,7 +6,7 @@ ADD environment.yml /tmp/environment.yml
 
 RUN conda env create -f /tmp/environment.yml
 # Pull the environment name out of the environment.yml
-RUN echo "source activate r" >> /etc/bash.bashrc
+# RUN echo "conda activate r" >> ~/.bashrc
 
 ENV PATH /opt/conda/envs/r/bin:$PATH
 
@@ -54,6 +54,8 @@ RUN  set -x \
   && addgroup rstudio staff \
   ## Prevent rstudio from deciding to use /usr/bin/R if a user apt-get installs a package
   &&  echo 'rsession-which-r=/opt/conda/envs/r/bin/R' >> /etc/rstudio/rserver.conf \
+  &&  echo 'rsession-ld-library-path=/opt/conda/envs/r/lib' >> /etc/rstudio/rserver.conf \
+  &&  echo 'rsession-exec-command=conda run -n r' >> /etc/rstudio/rserver.conf \
   ## use more robust file locking to avoid errors when using shared volumes:
   && echo 'lock-type=advisory' >> /etc/rstudio/file-locks \
   ## configure git not to request password each time

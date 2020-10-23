@@ -98,6 +98,9 @@ if [ "$UMASK" -ne 022 ]
     echo "Sys.umask(mode=$UMASK)" >> /home/$USER/.Rprofile
 fi
 
+## activate conda
+echo "conda activate r" >> /home/$USER/.bashrc
+
 ## add these to the global environment so they are avialable to the RStudio user
 echo "HTTR_LOCALHOST=$HTTR_LOCALHOST" >> /etc/R/Renviron.site
 echo "HTTR_PORT=$HTTR_PORT" >> /etc/R/Renviron.site
